@@ -3,15 +3,18 @@ const Footer = () => {
     <div
       style={{
         textAlign: "center",
-        marginBottom: 10,
+        maxHeight: '40px',
+        background: '#3f51b5',
+        color: '#ffffff',
+        padding:'0.7rem'
       }}
     >
       Made with ♥ by {" "}
       <a
-        href="https://gist.github.com/SyedaMahamFahim"
+        href="https://github.com/AdityaP68"
         style={{ cursor: "pointer" }}
       >
-        Syeda Maham Fahim
+        Aditya Prakash
       </a>
     </div>
   );

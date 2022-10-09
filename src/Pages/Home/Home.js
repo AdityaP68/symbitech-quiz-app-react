@@ -3,41 +3,42 @@ import { useState } from "react";
 import { useHistory } from "react-router";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import Categories from "../../Data/Categories";
+import InputField from "../../utils/InputField";
 import "./Home.css";
 
 const Home = ({ name, setName, fetchQuestions }) => {
-  const [category, setCategory] = useState("");
-  const [difficulty, setDifficulty] = useState("");
   const [error, setError] = useState(false);
- 
+  const [name1Val, setName1Val] = useState('');
+
   const history = useHistory();
 
   const handleSubmit = () => {
-    if (!category || !difficulty || !name) {
-      setError(true);
-     
-      return;
-    } else {
-      setError(false);
-      fetchQuestions(category, difficulty);
-      history.push("/quiz");
-    }
-    
+    setError(false);
+    fetchQuestions("books", "easy");
+    history.push("/quiz");
   };
 
   return (
     <div className="content">
       <div className="settings">
-        <span style={{ fontSize: 30 }}>Quiz Settings</span>
+        <span style={{ fontSize: 30 }}>Quiz Setup</span>
         <div className="settings__select">
           {error && <ErrorMessage>Please Fill all the feilds</ErrorMessage>}
-          <TextField
-            style={{ marginBottom: 25 }}
+          {/* <TextField
             label="Enter Your Name"
             variant="outlined"
             onChange={(e) => setName(e.target.value)}
+          /> */}
+          <InputField
+            placholder="Enter your Name"
+            inputHandler={(e) => {
+              console.log(name1Val);
+              setName1Val((e) => {
+                setName((prevState) => [...prevState, e]);
+              });
+            }}
           />
-          <TextField
+          {/* <TextField
             select
             label="Select Category"
             value={category}
@@ -50,8 +51,8 @@ const Home = ({ name, setName, fetchQuestions }) => {
                 {cat.category}
               </MenuItem>
             ))}
-          </TextField>
-          <TextField
+          </TextField> */}
+          {/* <TextField
             select
             label="Select Difficulty"
             value={difficulty}
@@ -68,7 +69,7 @@ const Home = ({ name, setName, fetchQuestions }) => {
             <MenuItem key="Hard" value="hard">
               Hard
             </MenuItem>
-          </TextField>
+          </TextField> */}
           <Button
             variant="contained"
             color="primary"
@@ -79,7 +80,14 @@ const Home = ({ name, setName, fetchQuestions }) => {
           </Button>
         </div>
       </div>
-      <img src="/quiz.svg" className="banner" alt="quiz app" />
+      <div style={{ minHeight: "70vh", display: "flex", alignItems: "center" }}>
+        <img
+          src="/quiz.svg"
+          className="banner"
+          alt="quiz app"
+          style={{ width: "40vw" }}
+        />
+      </div>
     </div>
   );
 };
