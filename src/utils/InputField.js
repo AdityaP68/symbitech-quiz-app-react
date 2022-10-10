@@ -11,6 +11,7 @@ function InputField({ inputHandler, placeholder }) {
           inputHandler(e.target.value);
         }}
         placeholder="Enter your Name"
+        required
       />
     </React.Fragment>
   );

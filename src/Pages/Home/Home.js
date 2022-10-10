@@ -1,20 +1,38 @@
 import { Button, MenuItem, TextField } from "@material-ui/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import Categories from "../../Data/Categories";
 import InputField from "../../utils/InputField";
 import "./Home.css";
 
-const Home = ({ name, setName, fetchQuestions }) => {
+const Home = ({ namesRef, fetchQuestions }) => {
   const [error, setError] = useState(false);
-  const [name1Val, setName1Val] = useState('');
+
+  const [name1, setName1] = useState("");
+  const [name2, setName2] = useState("");
+  const [name3, setName3] = useState("");
+  const [name4, setName4] = useState("");
+  const [idx, setIdx] = useState(1);
+
+  const nameSetterArr = [setName1, setName2, setName3, setName4];
+  const [currArr, setCurrArr] = useState([nameSetterArr[0]]);
 
   const history = useHistory();
 
+  useEffect(() => {
+    namesRef.current.names = {
+      name1: name1,
+      name2: name2,
+      name3: name3,
+      name4: name4,
+    };
+    // console.log('ref',namesRef.current.names)
+  }, [name1, name2, name3, name4]);
+
   const handleSubmit = () => {
     setError(false);
-    fetchQuestions("books", "easy");
+    fetchQuestions();
     history.push("/quiz");
   };
 
@@ -23,58 +41,44 @@ const Home = ({ name, setName, fetchQuestions }) => {
       <div className="settings">
         <span style={{ fontSize: 30 }}>Quiz Setup</span>
         <div className="settings__select">
-          {error && <ErrorMessage>Please Fill all the feilds</ErrorMessage>}
-          {/* <TextField
-            label="Enter Your Name"
-            variant="outlined"
-            onChange={(e) => setName(e.target.value)}
-          /> */}
-          <InputField
-            placholder="Enter your Name"
-            inputHandler={(e) => {
-              console.log(name1Val);
-              setName1Val((e) => {
-                setName((prevState) => [...prevState, e]);
-              });
+          {error && <ErrorMessage>Max Member Limit Reached</ErrorMessage>}
+
+          {currArr.map((item, idx) => (
+            <InputField
+              id={idx}
+              inputHandler={(e) => {
+                // console.log(name1, name2, name3, name4);
+                item(e);
+              }}
+            />
+          ))}
+          <button
+            style={{
+              padding: "0.8rem",
+              borderRadius: "8px",
+              fontSize: "1rem",
+              cursor: "pointer",
             }}
-          />
-          {/* <TextField
-            select
-            label="Select Category"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            variant="outlined"
-            style={{ marginBottom: 30 }}
+            onClick={() => {
+              if (idx < 4) {
+                setIdx((v) => v + 1);
+                setCurrArr((prev) => [...prev, nameSetterArr[idx]]);
+                setError(false);
+              } else {
+                setError(true);
+              }
+            }}
           >
-            {Categories.map((cat) => (
-              <MenuItem key={cat.category} value={cat.value}>
-                {cat.category}
-              </MenuItem>
-            ))}
-          </TextField> */}
-          {/* <TextField
-            select
-            label="Select Difficulty"
-            value={difficulty}
-            onChange={(e) => setDifficulty(e.target.value)}
-            variant="outlined"
-            style={{ marginBottom: 30 }}
-          >
-            <MenuItem key="Easy" value="easy">
-              Easy
-            </MenuItem>
-            <MenuItem key="Medium" value="medium">
-              Medium
-            </MenuItem>
-            <MenuItem key="Hard" value="hard">
-              Hard
-            </MenuItem>
-          </TextField> */}
+            add members +
+          </button>
+
           <Button
             variant="contained"
             color="primary"
             size="large"
-            onClick={handleSubmit}
+            onClick={() => {
+              handleSubmit();
+            }}
           >
             Start Quiz
           </Button>

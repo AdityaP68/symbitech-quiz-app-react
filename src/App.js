@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import Footer from "./components/Footer/Footer";
@@ -12,12 +12,20 @@ function App() {
   const [questions, setQuestions] = useState();
   const [name, setName] = useState();
   const [score, setScore] = useState(0);
-
+  const namesRef = useRef({
+    names: {}
+  })
+  
+  
   const fetchQuestions = async () => {
-    const { data } = await axios.get("some url");
-    setQuestions(data.results);
+    const res = await axios.get("https://codesandboards-server.herokuapp.com/select/questions");
+    setQuestions(res.data);
+    console.log(questions)
+    console.log('name', namesRef.current.names)
   };
-
+  
+  useState(()=>{fetchQuestions()}, [questions])
+  
   return (
     <BrowserRouter>
       <div
@@ -34,6 +42,7 @@ function App() {
               <Home
                 name={name}
                 setName={setName}
+                namesRef = {namesRef}
                 fetchQuestions={fetchQuestions}
               />
             </Route>
