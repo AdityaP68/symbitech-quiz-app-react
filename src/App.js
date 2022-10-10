@@ -6,6 +6,7 @@ import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import Home from "./Pages/Home/Home";
 import Quiz from "./Pages/Quiz/Quiz";
+import TeamNum from "./Pages/TeamNum/TeamNum";
 
 function App() {
   const [questions, setQuestions] = useState();
@@ -13,13 +14,14 @@ function App() {
   const [score, setScore] = useState(0);
   const [allCorrect, setAllCorrect] = useState(false);
   const [apiKey, setApiKey] = useState("");
+  const [teamId, setTeamId] = useState("");
   const namesRef = useRef({
     names: {},
   });
 
-  const fetchQuestions = async (id = 1) => {
+  const fetchQuestions = async (teamId= 1) => {
     const res = await axios.get(
-      `https://codesandboards-server.herokuapp.com/select/quizzes/teamID/${id}`
+      `https://codesandboards-server.herokuapp.com/select/quizzes/teamID/${teamId}`
     );
     // console.log(res.data[0].question);
     setQuestions(res.data[0].question);
@@ -27,9 +29,9 @@ function App() {
     // console.log('name', namesRef.current.names)
   };
 
-  const fetchApiKey = async (id = 1) => {
+  const fetchApiKey = async (teamId = 1) => {
     const res = await axios.get(
-      `https://codesandboards-server.herokuapp.com/select/api_keys/teamID/${id}`
+      `https://codesandboards-server.herokuapp.com/select/api_keys/teamID/${teamId}`
     );
     // console.log(res.data[0]);
     setApiKey(res.data[0].key);
@@ -58,6 +60,9 @@ function App() {
                 namesRef={namesRef}
                 fetchQuestions={fetchQuestions}
               />
+            </Route>
+            <Route path="/homepage">
+              <TeamNum teamId={teamId} setTeamId={setTeamId} />
             </Route>
             <Route path="/quiz">
               <Quiz

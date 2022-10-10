@@ -22,11 +22,11 @@ const Question = ({
   // console.log("score", score);
 
   const handleCheck = (option) => {
-    console.log(
-      option,
-      questions[currQues].correct_option,
-      option == questions[currQues].correct_option
-    );
+    // console.log(
+    //   option,
+    //   questions[currQues].correct_option,
+    //   option == questions[currQues].correct_option
+    // );
     setSelected(option);
     if (option === questions[currQues].correct_option) {
       setScore((v) => v + 1);

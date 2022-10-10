@@ -23,6 +23,7 @@ const Quiz = ({
   return (
     <div className="quiz">
       <span className="subtitle">Welcome, Team#{teamNum}</span>
+      {/* Change the props to show the team member's names by entered team id*/}
       <div style={{ position: "absolute", top: "28px", right: "105px" }}>
         <p>{names.name1}</p>
         <p>{names.name2}</p>
