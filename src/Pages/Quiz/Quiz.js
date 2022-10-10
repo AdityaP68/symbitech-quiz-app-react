@@ -5,18 +5,25 @@ import "./Quiz.css";
 
 let teamNum;
 
-const Quiz = ({ questions, namesRef, score, setScore}) => {
-  const [options, setOptions] = useState();
+const Quiz = ({
+  questions,
+  namesRef,
+  score,
+  setScore,
+  setAllCorrect,
+  setQuestions,
+  fetchApiKey,
+}) => {
   const [currQues, setCurrQues] = useState(0);
   const [names, setName] = useState(namesRef.current.names);
   useEffect(() => {
     teamNum = Math.floor(Math.random() * 1000);
   }, []);
-  console.log(questions);
+  // console.log(questions);
   return (
     <div className="quiz">
       <span className="subtitle">Welcome, Team#{teamNum}</span>
-      <div style ={{position: "absolute", top: "28px", right: "105px"}}>
+      <div style={{ position: "absolute", top: "28px", right: "105px" }}>
         <p>{names.name1}</p>
         <p>{names.name2}</p>
         <p>{names.name3}</p>
@@ -25,13 +32,16 @@ const Quiz = ({ questions, namesRef, score, setScore}) => {
 
       <>
         <div className="quizInfo">
-        <Question
-        currQues={currQues}
-        questions={questions}
-        score = {score}
-        setScore = {setScore}
-        setCurrQues= {setCurrQues}
-        />
+          <Question
+            currQues={currQues}
+            questions={questions}
+            score={score}
+            setScore={setScore}
+            setCurrQues={setCurrQues}
+            setAllCorrect={setAllCorrect}
+            setQuestions={setQuestions}
+            fetchApiKey={fetchApiKey}
+          />
         </div>
       </>
       {questions ? (
