@@ -35,7 +35,7 @@ function App() {
           minHeight: "96vh",
         }}
       >
-        <Header />
+        <Header namesRef={namesRef}/>
         <div style={{ marginTop: "2rem" }}>
           <Switch>
             <Route path="/" exact>
@@ -49,6 +49,7 @@ function App() {
             <Route path="/quiz">
               <Quiz
                 name={name}
+                namesRef = {namesRef}
                 questions={questions}
                 score={score}
                 setScore={setScore}

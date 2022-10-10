@@ -5,34 +5,42 @@ import "./Quiz.css";
 
 let teamNum;
 
-const Quiz = ({questions}) => {
-  
+const Quiz = ({ questions, namesRef }) => {
   const [options, setOptions] = useState();
   const [currQues, setCurrQues] = useState(0);
-  useEffect(()=>{
-    teamNum = Math.floor(Math.random()*1000)
-  },[])
-console.log(questions)
+  const [names, setName] = useState(namesRef.current.names);
+  useEffect(() => {
+    teamNum = Math.floor(Math.random() * 1000);
+  }, []);
+  console.log(questions);
   return (
     <div className="quiz">
       <span className="subtitle">Welcome, Team#{teamNum}</span>
-      <div></div>
+      <div style ={{position: "absolute", top: "28px", right: "105px"}}>
+        <p>{names.name1}</p>
+        <p>{names.name2}</p>
+        <p>{names.name3}</p>
+        <p>{names.name4}</p>
+      </div>
 
-
-        <>
-          <div className="quizInfo">
-
-          </div>
-
-        </>
-        {questions? (<></>) : (
+      <>
+        <div className="quizInfo">
+        <Question
+        currQues={currQues}
+        questions={questions}
+        />
+        </div>
+      </>
+      {questions ? (
+        <></>
+      ) : (
         <CircularProgress
           style={{ margin: 100 }}
           color="inherit"
           size={150}
           thickness={1}
         />
-      )} 
+      )}
     </div>
   );
 };

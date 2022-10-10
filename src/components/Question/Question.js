@@ -8,7 +8,7 @@ const Question = ({
   currQues,
   setCurrQues,
   questions,
-  options,
+  // options,
   correct,
   setScore,
   score,
@@ -44,13 +44,51 @@ const Question = ({
     setCurrQues(0);
     setQuestions();
   };
+  console.log("ques", questions);
 
   return (
     <div className="question">
       <h1>Question {currQues + 1} :</h1>
-
+      {error && <ErrorMessage>{error}</ErrorMessage>}
       <div className="singleQuestion">
-        <h2>{questions[currQues].question}</h2>
+        <h2>{questions[currQues].description}</h2>
+        <div className="options">
+          <button className={`singleOption`}>
+            {questions[currQues].option_a}
+          </button>
+          <button className={`singleOption`}>
+            {questions[currQues].option_b}
+          </button>
+          <button className={`singleOption`}>
+            {questions[currQues].option_c}
+          </button>
+          <button className={`singleOption`}>
+            {questions[currQues].option_d}
+          </button>
+        </div>
+        <div className="controls">
+          <Button
+            variant="contained"
+            color="secondary"
+            size="large"
+            style={{ width: 185 }}
+            href="/"
+            onClick={() => handleQuit()}
+          >
+            Quit
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            style={{ width: 185 }}
+            onClick={handleNext}
+          >
+            {currQues > 20 ? "Submit" : "Next Question"}
+          </Button>
+        </div>
+      </div>
+      {/* <div className="singleQuestion">
         <div className="options">
           {error && <ErrorMessage>{error}</ErrorMessage>}
           {options &&
@@ -86,7 +124,7 @@ const Question = ({
             {currQues > 20 ? "Submit" : "Next Question"}
           </Button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
