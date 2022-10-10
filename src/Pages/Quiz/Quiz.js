@@ -5,7 +5,7 @@ import "./Quiz.css";
 
 let teamNum;
 
-const Quiz = ({ questions, namesRef }) => {
+const Quiz = ({ questions, namesRef, score, setScore}) => {
   const [options, setOptions] = useState();
   const [currQues, setCurrQues] = useState(0);
   const [names, setName] = useState(namesRef.current.names);
@@ -28,6 +28,9 @@ const Quiz = ({ questions, namesRef }) => {
         <Question
         currQues={currQues}
         questions={questions}
+        score = {score}
+        setScore = {setScore}
+        setCurrQues= {setCurrQues}
         />
         </div>
       </>

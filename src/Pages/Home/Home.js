@@ -13,10 +13,10 @@ const Home = ({ namesRef, fetchQuestions }) => {
   const [name2, setName2] = useState("");
   const [name3, setName3] = useState("");
   const [name4, setName4] = useState("");
-  const [idx, setIdx] = useState(1);
+  const [idx, setIdx] = useState(2);
 
   const nameSetterArr = [setName1, setName2, setName3, setName4];
-  const [currArr, setCurrArr] = useState([nameSetterArr[0]]);
+  const [currArr, setCurrArr] = useState([nameSetterArr[0], nameSetterArr[1]]);
 
   const history = useHistory();
 

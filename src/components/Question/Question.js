@@ -8,8 +8,6 @@ const Question = ({
   currQues,
   setCurrQues,
   questions,
-  // options,
-  correct,
   setScore,
   score,
   setQuestions,
@@ -19,20 +17,24 @@ const Question = ({
 
   const history = useHistory();
 
-  const handleSelect = (i) => {
-    if (selected === i && selected === correct) return "select";
-    else if (selected === i && selected !== correct) return "wrong";
-    else if (i === correct) return "select";
-  };
+  console.log("score", score);
 
-  const handleCheck = (i) => {
-    setSelected(i);
-    if (i === correct) setScore(score + 1);
+  const handleCheck = (option) => {
+    console.log(
+      option,
+      questions[currQues].correct_option,
+      option == questions[currQues].correct_option
+    );
+    setSelected(option);
+    if (option === questions[currQues].correct_option) {
+      setScore((v) => v + 1);
+      // console.log('working')
+    }
     setError(false);
   };
 
   const handleNext = () => {
-    if (currQues > 8) {
+    if (currQues > questions.length - 2) {
       history.push("/result");
     } else if (selected) {
       setCurrQues(currQues + 1);
@@ -43,88 +45,79 @@ const Question = ({
   const handleQuit = () => {
     setCurrQues(0);
     setQuestions();
+    setScore(0);
   };
-  console.log("ques", questions);
+  // console.log("ques", questions);
+  console.log(currQues, questions.length)
 
   return (
     <div className="question">
       <h1>Question {currQues + 1} :</h1>
       {error && <ErrorMessage>{error}</ErrorMessage>}
-      <div className="singleQuestion">
-        <h2>{questions[currQues].description}</h2>
-        <div className="options">
-          <button className={`singleOption`}>
-            {questions[currQues].option_a}
-          </button>
-          <button className={`singleOption`}>
-            {questions[currQues].option_b}
-          </button>
-          <button className={`singleOption`}>
-            {questions[currQues].option_c}
-          </button>
-          <button className={`singleOption`}>
-            {questions[currQues].option_d}
-          </button>
+      {currQues < questions.length-1 && (
+        <div className="singleQuestion">
+          <h2>{questions[currQues].description}</h2>
+          <div className="options">
+            <button
+              className={`singleOption ${selected === 1 && "select"}`}
+              onClick={() => {
+                handleCheck(1);
+              }}
+              disabled={selected}
+            >
+              {questions[currQues].option_a}
+            </button>
+            <button
+              className={`singleOption ${selected === 2 && "select"}`}
+              onClick={() => {
+                handleCheck(2);
+              }}
+              disabled={selected}
+            >
+              {questions[currQues].option_b}
+            </button>
+            <button
+              className={`singleOption ${selected === 3 && "select"}`}
+              onClick={() => {
+                handleCheck(3);
+              }}
+              disabled={selected}
+            >
+              {questions[currQues].option_c}
+            </button>
+            <button
+              className={`singleOption ${selected === 4 && "select"}`}
+              onClick={() => {
+                handleCheck(4);
+              }}
+              disabled={selected}
+            >
+              {questions[currQues].option_d}
+            </button>
+          </div>
+          <div className="controls">
+            <Button
+              variant="contained"
+              color="secondary"
+              size="large"
+              style={{ width: 185 }}
+              href="/"
+              onClick={() => handleQuit()}
+            >
+              Quit
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              style={{ width: 185 }}
+              onClick={handleNext}
+            >
+              {currQues > questions.length - 2 ? "Submit" : "Next Question"}
+            </Button>
+          </div>
         </div>
-        <div className="controls">
-          <Button
-            variant="contained"
-            color="secondary"
-            size="large"
-            style={{ width: 185 }}
-            href="/"
-            onClick={() => handleQuit()}
-          >
-            Quit
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            style={{ width: 185 }}
-            onClick={handleNext}
-          >
-            {currQues > 20 ? "Submit" : "Next Question"}
-          </Button>
-        </div>
-      </div>
-      {/* <div className="singleQuestion">
-        <div className="options">
-          {error && <ErrorMessage>{error}</ErrorMessage>}
-          {options &&
-            options.map((i) => (
-              <button
-                className={`singleOption  ${selected && handleSelect(i)}`}
-                key={i}
-                onClick={() => handleCheck(i)}
-                disabled={selected}
-              >
-                {i}
-              </button>
-            ))}
-        </div>
-        <div className="controls">
-          <Button
-            variant="contained"
-            color="secondary"
-            size="large"
-            style={{ width: 185 }}
-            href="/"
-            onClick={() => handleQuit()}
-          >
-            Quit
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            style={{ width: 185 }}
-            onClick={handleNext}
-          >
-            {currQues > 20 ? "Submit" : "Next Question"}
-          </Button>
-        </div>
-      </div> */}
+      )}
     </div>
   );
 };

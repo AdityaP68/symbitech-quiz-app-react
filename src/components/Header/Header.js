@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "./Header.css";
 
-const Header = () => {
+const Header = ({setScore}) => {
   return (
     <div className="header">
       <img
@@ -13,7 +13,7 @@ const Header = () => {
           top: "25px",
         }}
       />
-      <Link to="/" className="title">
+      <Link to="/" className="title" onClick={()=>{setScore(0)}}>
         Codes & Boards
       </Link>
 

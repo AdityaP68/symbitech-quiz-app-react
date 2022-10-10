@@ -18,10 +18,11 @@ function App() {
   
   
   const fetchQuestions = async () => {
-    const res = await axios.get("https://codesandboards-server.herokuapp.com/select/questions");
-    setQuestions(res.data);
-    console.log(questions)
-    console.log('name', namesRef.current.names)
+    const res = await axios.get("https://codesandboards-server.herokuapp.com/select/quizzes/teamID/1");
+    console.log(res.data[0].question)
+    setQuestions(res.data[0].question);
+    // console.log(questions)
+    // console.log('name', namesRef.current.names)
   };
   
   useState(()=>{fetchQuestions()}, [questions])
@@ -35,7 +36,7 @@ function App() {
           minHeight: "96vh",
         }}
       >
-        <Header namesRef={namesRef}/>
+        <Header namesRef={namesRef} setScore = {setScore}/>
         <div style={{ marginTop: "2rem" }}>
           <Switch>
             <Route path="/" exact>
@@ -57,7 +58,7 @@ function App() {
               />
             </Route>
             <Route path="/result">
-              <Result name={name} score={score} />
+              <div>welcome, your Score is {score}</div>
             </Route>
           </Switch>
         </div>
